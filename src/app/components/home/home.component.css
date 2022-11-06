@@ -1,0 +1,77 @@
+span {
+    margin: 10px 10px 0 0;
+}
+
+#refresh {
+    display: flex;
+    align-items: center;
+}
+
+#refresh * {
+    margin: 0px 10px;
+}
+
+.cards-parent {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.card {
+    min-width: 320px;
+    margin: 10px;
+    padding: 0px 10px 5px 10px;
+    border: 2px solid chartreuse;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-weight: bolder;
+    margin: 10px 5px;
+}
+
+.card-header-data {
+    margin: 5px;
+}
+
+.card-header-data span {
+    margin: 0;
+    font-weight: bold;
+}
+
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-body-title {
+    font-weight: bold;
+    margin: 5px;
+}
+
+.card-body-data {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.quantidade-data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5px 10px;
+}
+
+.porcentagem-data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 5px;
+}

@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-header">
+        <h3>{{ cid.app }}</h3>
+        <span>Data: {{ cid.data | date: "dd/MM/yyyy HH:mm"}}</span>
+    </div>
+
+    <div>
+        Total de Clientes: {{ cid.clientes }}
+        Impactados: {{ cid.impactados }}
+        Baixa Prioridade: {{ cid.baixaPrioridade }}
+        Alta Prioridade: {{ cid.altaPrioridade }}
+        {{ cid.porcentagemImpactados | number: '1.2-2' }}%
+        {{ cid.porcentagemAltaPrioridade | number: '1.2-2' }}%
+        {{ cid.porcentagemBaixaPrioridade | number: '1.2-2' }}%
+    </div>
+</div>

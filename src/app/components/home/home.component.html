@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+<div id="refresh">
+	<div>Última atualização: {{ now | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
+	
+	<button type="button" (click)="refresh()">Refresh</button>
+</div>
+
+<div class="cards-parent">
+	<div class="card" *ngFor="let ci of allClientesImpactadosDetails" (click)="selectApp(ci.app)">
+		<div class="card-header">
+			<div class="card-title">App: {{ ci.app }}</div>
+
+			<div class="card-header-data">
+				<div><span>Hora:</span> {{ ci.data | date: 'HH:mm' }}</div>
+				<!-- <div><span>Total de Clientes:</span> {{ ci.clientes }}</div> -->
+			</div>
+		</div>
+
+		<div class="card-body">
+
+			<div class="card-body-title">
+				<div>
+					Total de Clientes:
+				</div>
+
+				<div>
+					Impactados:
+				</div>
+
+				<div>
+					Baixa Prioridade:
+				</div>
+
+				<div>
+					Alta Prioridade:
+				</div>
+			</div>
+
+			<div class="card-body-data">
+				<div class="quantidade-data">
+					<div>
+						{{ ci.clientes }}
+					</div>
+
+					<div>
+						{{ ci.impactados }}
+					</div>
+	
+					<div>
+						{{ ci.baixaPrioridade }}
+					</div>
+	
+					<div>
+						{{ ci.altaPrioridade }}
+					</div>
+				</div>
+	
+				<div class="porcentagem-data">
+					<div>
+						N/A
+					</div>
+
+					<div>
+						{{ ci.porcentagemImpactados | number: '1.2-2' }}%
+					</div>
+	
+					<div>
+						{{ ci.porcentagemBaixaPrioridade | number: '1.2-2' }}%
+					</div>
+	
+					<div>
+						{{ ci.porcentagemAltaPrioridade | number: '1.2-2' }}%
+					</div>
+				</div>
+	
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<app-cliente-impactado-chart *ngIf="appName; else chartPlaceholder" [selectedApp]="appName" (eventEmitter)="onNotify($event)"></app-cliente-impactado-chart>
+<ng-template #chartPlaceholder><h2 style="text-align: center;">Selecione algum app acima para mostrar o grafico</h2></ng-template>
+
+<hr>
+
+<app-cliente-impactado-card-detail *ngIf="selectedDate; else cardDetailPlaceholder" [selectedApp]="appName" [selectedDate]="selectedDate"></app-cliente-impactado-card-detail>
+<ng-template #cardDetailPlaceholder><h2 style="text-align: center;">Selecione algum registro do grafico para mostrar os detalhes</h2></ng-template>

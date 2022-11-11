@@ -80,7 +80,7 @@
 
 <hr>
 
-<app-cliente-impactado-chart *ngIf="appName; else chartPlaceholder" [selectedApp]="appName" (eventEmitter)="onNotify($event)"></app-cliente-impactado-chart>
+<app-cliente-impactado-chart [selectedApp]="appName" (eventEmitter)="onNotify($event)"></app-cliente-impactado-chart>
 <ng-template #chartPlaceholder><h2 style="text-align: center;">Selecione algum app acima para mostrar o grafico</h2></ng-template>
 
 <hr>

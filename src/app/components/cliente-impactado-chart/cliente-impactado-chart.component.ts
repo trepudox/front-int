@@ -13,37 +13,138 @@ export class ClienteImpactadoChartComponent implements OnInit, OnChanges {
 
   @Input() selectedApp: string;
   @Output() eventEmitter = new EventEmitter();
-  chart?: Chart<"bar", string[], string>;
+  chart?: Chart<"line", string[], string>;
 
   clientesImpactados: ClienteImpactado[];
-  hours: string[];
-  clientes: string[];
-  impactados: string[];
-  baixaPrioridade: string[];
-  altaPrioridade: string[];
+  hours: string[] = ["19:00", "19:05", "19:10", "19:15", "19:20", "19:25", "19:30", "19:35", "19:40", "19:45", "19:50", "19:55"];
+  clientes: string[] = ["100", "90", "80", "110", "100", "90", "80", "110", "100", "90", "80", "110"];
+  impactados: string[] = ["50", "30", "20", "60", "50", "30", "20", "60", "50", "30", "20", "60"];
+  baixaPrioridade: string[] = ["10", "25", "10", "42", "10", "25", "10", "42", "10", "25", "10", "42"];
+  altaPrioridade: string[] = ["40", "5", "10", "18", "40", "5", "10", "18", "40", "5", "10", "18"];
+
+  datasets = [
+    {
+      label: "Clientes",
+      data: this.clientes,
+      backgroundColor: "rgb(0, 61, 131)",
+      pointRadius: 4,
+      borderColor: "rgba(0, 61, 131, 0.25)",
+      hoverBorderColor: "black",
+      hoverBorderWidth: 1,
+      pointHoverRadius: 6,
+    },
+    {
+      label: "Impactados",
+      data: this.impactados,
+      backgroundColor: "rgb(241, 194, 50)",
+      pointRadius: 4,
+      borderColor: "rgb(241, 194, 50, 0.25)",
+      hoverBorderColor: "black",
+      hoverBorderWidth: 1,
+      pointHoverRadius: 6,
+    },
+    {
+      label: "Baixa Prioridade",
+      data: this.baixaPrioridade,
+      backgroundColor: "rgb(255, 110, 0)",
+      pointRadius: 4,
+      borderColor: "rgba(255, 110, 0, 0.25)",
+      hoverBorderColor: "black",
+      hoverBorderWidth: 1,
+      pointHoverRadius: 6,
+      
+    },
+    {
+      label: "Alta Prioridade",
+      data: this.altaPrioridade,
+      backgroundColor: "rgb(210, 0, 0)",
+      pointRadius: 4,
+      borderColor: "rgba(210, 0, 0, 0.25)",
+      hoverBorderColor: "black",
+      hoverBorderWidth: 1,
+      pointHoverRadius: 6,
+    }
+  ]
 
   private readonly hoverBackgroundColor = {
     id: "hoverBackgroundColor",
-    beforeDatasetsDraw(chart: any): void {
-      const {ctx, tooltip, chartArea: {top, height}, scales: {x}} = chart;
+    // beforeDatasetsDraw(chart: any): void {
+    //   const arr: any[] = [];
+    //   const {boxes, tooltip} = chart;
       
-      if(tooltip._active[0]) {
-        let index = tooltip._active[0].index + 1;
-        let newWidth;
-        if(index === 0) {
-          newWidth = 0;
-        } else {
-          newWidth = x._gridLineItems[1].x1 - x._gridLineItems[2].x1;
-        }
-  
-        document.body.style.cursor = "pointer";
-        ctx.fillStyle = 'rgba(128, 128, 128, .25)';
-        ctx.fillRect(x._gridLineItems[index].x1, top, newWidth, height);
-      } else {
-        document.body.style.cursor = "unset";
-      }
+    //   if(tooltip._active[0]) {
+    //     let tooltipTitle = tooltip.title[0];
+    //     let itemIndex = boxes[3].ticks.findIndex((obj: any) => obj.label === tooltipTitle);
+        
+    //     let sortedMetasets: any[] = chart._sortedMetasets;
 
-    }
+    //     for(let datasetIndex = 0; datasetIndex < sortedMetasets.length; datasetIndex++) {
+    //       let element = sortedMetasets[datasetIndex].data[itemIndex];
+    //       element.active = true;
+    //       let toBeActive = {element: element, index: itemIndex, datasetIndex: datasetIndex}
+
+    //       chart._active.push(toBeActive);
+    //     }
+
+    //     // console.log("all active: ")
+    //     // console.log(chart._active)
+    //     document.body.style.cursor = "pointer";
+
+    //     chart.updateHoverStyle(chart._active, null, true)
+    //     chart.render();
+    //   } else {
+    //     document.body.style.cursor = "unset";
+    //     chart.updateHoverStyle(arr, null, false);
+    //     chart.render();
+    //   }
+    // },
+
+
+    // beforeEvent(chart: any, args: any): void {
+    //   const { tooltip, boxes } = chart;
+    //   const { event, inChartArea } = args;
+    //   console.log(chart)
+    //   if(event.native instanceof MouseEvent) {
+    //     if(inChartArea) {
+    //       if(tooltip._active[0]) {
+    //         let tooltipTitle = tooltip.title[0];
+    //         let columnIndex = boxes[3].ticks.findIndex((obj: any) => obj.label === tooltipTitle);
+            
+    //         let sortedMetasets: any[] = chart._sortedMetasets;
+
+    //         let arr: any[] = [];
+    //         for(let datasetIndex = 0; datasetIndex < sortedMetasets.length; datasetIndex++) {
+    //           let element = sortedMetasets[datasetIndex].data[columnIndex];
+    //           arr.push({element: element, index: columnIndex, datasetIndex: datasetIndex});
+    //         }
+
+    //         document.body.style.cursor = "pointer";
+            
+    //         chart.updateHoverStyle(arr, null, true)
+    //         chart.render();
+    //       }
+    //     } else {
+    //       chart.updateHoverStyle(this.findActivePoints(chart._sortedMetasets), null, false)
+    //       chart.render();
+    //     }
+    //   }
+
+    //   console.log(args);
+    // },
+    // findActivePoints(sortedMetasets: any[]): any[] {
+    //   let arr: any[] = [];
+    //   for(let datasetIndex = 0; datasetIndex < sortedMetasets.length; datasetIndex++) {
+    //     let dataset = sortedMetasets[datasetIndex];
+    //     for(let column = 0; column < dataset.length; column++) {
+    //       let element = dataset.data[column];
+    //       if(element.active) {
+    //         arr.push({element: element, index: column, datasetIndex: datasetIndex});
+    //       }
+    //     }
+    //   }
+    //   return arr;
+    // }
+
   }
 
   private readonly tooltipClick = {
@@ -68,13 +169,14 @@ export class ClienteImpactadoChartComponent implements OnInit, OnChanges {
   constructor(private clienteImpactadoService: ClienteImpactadoService) {}
 
   ngOnInit(): void {
-    this.tooltipClick.tooltipClickEventEmitter.subscribe({next: (v: string) => this.eventEmitter.emit(v)});
+    // this.tooltipClick.tooltipClickEventEmitter.subscribe({next: (v: string) => this.eventEmitter.emit(v)});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.createChart();
     if(this.selectedApp) {
       console.log(this.selectedApp);
-      this.getAllClienteImpactadosByAppFromLastHour(this.selectedApp);
+      // this.getAllClienteImpactadosByAppFromLastHour(this.selectedApp);
     }
   }
 
@@ -101,55 +203,37 @@ export class ClienteImpactadoChartComponent implements OnInit, OnChanges {
     }
 
     this.chart = new Chart("clienteImpactadoChart", {
-      type: "bar",
+      type: "line",
       data: {
         labels: this.hours,
-        datasets: [
-          {
-            label: "Clientes",
-            data: this.clientes,
-            backgroundColor: "green",
-            hoverBorderColor: "black",
-            hoverBorderWidth: .66
-          },
-          {
-            label: "Impactados",
-            data: this.impactados,
-            backgroundColor: "yellow",
-            hoverBorderColor: "black",
-            hoverBorderWidth: .66
-          },
-          {
-            label: "Baixa Prioridade",
-            data: this.baixaPrioridade,
-            backgroundColor: "orange",
-            hoverBorderColor: "black",
-            hoverBorderWidth: .66
-          },
-          {
-            label: "Alta Prioridade",
-            data: this.altaPrioridade,
-            backgroundColor: "red",
-            hoverBorderColor: "black",
-            hoverBorderWidth: .66
-          }
-        ]
+        datasets: this.datasets
       },
       options: {
         aspectRatio: 5,
         plugins: {
+          tooltip: {
+            titleFont: {
+              size: 15
+            },
+            mode: "index",
+            intersect: false
+          },
           legend: {
             display: true
           },
-          tooltip: {
-            mode: "index",
-            intersect: false
-          }
+        },
+        hover: {
+          mode: "index",
+          intersect: false,
+        },
+        onHover: (event, chartElement) => {
+          const target: any = event.native?.target;
+          target.style.cursor = chartElement[0] ? 'pointer' : 'default';
         }
       },
       plugins: [this.hoverBackgroundColor, this.tooltipClick]
     });
-
+    console.log(this.chart);
   }
 
 
